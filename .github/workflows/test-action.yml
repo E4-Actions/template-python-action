@@ -10,11 +10,13 @@ on:
         default: 'E4-Actions'
 
 jobs:
-  test-job:
+  test-action:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Test step'
-        uses: E4-Actions/template-action@master
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+      - name: 'Test local action'
+        uses: ./
         with:
           target: ${{ inputs.target }}
