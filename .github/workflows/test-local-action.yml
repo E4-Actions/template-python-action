@@ -1,4 +1,4 @@
-﻿name: 'Test Action'
+﻿name: 'Test Local Action'
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
         default: 'E4-Actions'
 
 jobs:
-  test-action:
+  test-local-action:
     runs-on: ubuntu-latest
 
     steps:
