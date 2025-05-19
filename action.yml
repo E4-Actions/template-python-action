@@ -3,10 +3,15 @@ inputs:
   target:
     description: 'Target to greet'
     required: false
-    default: ${{ github.repository_owner }}
 runs:
   using: composite
   steps:
+    - name: 'Set env'
+      run: |
+        TARGET="${{ github.repository_owner }}"
+        [ -n "${{ inputs.target }}" ] && TARGET="${{ inputs.target }}"
+        echo "TARGET=$TARGET" >> "$GITHUB_ENV"
+      shell: bash
     - name: 'Greet'
-      run: echo "Hello, ${{ inputs.target }}!"
+      run: echo "Hello, ${{ env.TARGET }}!"
       shell: bash
