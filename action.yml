@@ -13,5 +13,6 @@ runs:
         echo "TARGET=$TARGET" >> "$GITHUB_OUTPUT"
       shell: bash
     - name: 'Run python scripts'
-      run: python ./scripts/main.py ${{ steps.set-variables.outputs.TARGET }}
+      working-directory: './scripts'
+      run: python main.py ${{ steps.set-variables.outputs.TARGET }}
       shell: bash
