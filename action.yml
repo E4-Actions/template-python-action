@@ -1,17 +1,17 @@
-﻿name: 'Greet'
+﻿name: 'Python Action'
 inputs:
   target:
-    description: 'Target to greet'
+    description: 'Target'
     required: false
 runs:
   using: composite
   steps:
-    - name: 'Set env'
+    - name: 'Set variables'
+      id: set-variables
       run: |
-        TARGET="${{ github.repository_owner }}"
-        [ -n "${{ inputs.target }}" ] && TARGET="${{ inputs.target }}"
-        echo "TARGET=$TARGET" >> "$GITHUB_ENV"
+        [ -n "${{ inputs.target }}" ] && TARGET="${{ inputs.target }}" || TARGET="${{ github.repository_owner }}"
+        echo "TARGET=$TARGET" >> "$GITHUB_OUTPUT"
       shell: bash
-    - name: 'Greet'
-      run: echo "Hello, ${{ env.TARGET }}!"
+    - name: 'Run python scripts'
+      run: python ./scripts/main.py ${{ steps.set-variables.outputs.TARGET }}
       shell: bash
