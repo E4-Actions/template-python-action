@@ -3,6 +3,7 @@ inputs:
   target:
     description: 'Target'
     required: false
+
 runs:
   using: composite
   steps:
@@ -10,9 +11,11 @@ runs:
       id: set-variables
       run: |
         [ -n "${{ inputs.target }}" ] && TARGET="${{ inputs.target }}" || TARGET="${{ github.repository_owner }}"
-        echo "TARGET=$TARGET" >> "$GITHUB_OUTPUT"
+        echo "target=$TARGET" >> "$GITHUB_OUTPUT"
       shell: bash
     - name: 'Run python scripts'
-      working-directory: './scripts'
-      run: python main.py ${{ steps.set-variables.outputs.TARGET }}
+      working-directory: ${{ github.action_path }}/scripts
+      run: |
+        [ -f requirements.txt ] && pip install -r requirements.txt
+        python main.py ${{ steps.set-variables.outputs.target }}
       shell: bash
